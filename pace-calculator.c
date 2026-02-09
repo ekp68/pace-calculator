@@ -9,13 +9,49 @@ int main()
     int minutes;
     int seconds;
     
+    int is_valid = 0;
     printf("Enter distance (km): ");
-    fgets(buff, n, stdin);
-    sscanf(buff, "%lf", &kilometers);
+    while (!is_valid)
+    {
+        fgets(buff, n, stdin);
+        if (sscanf(buff, "%lf", &kilometers) != 1)
+        {
+            printf("Distance (km) needs to be a number: ");
+            continue;
+        }
+        else if (kilometers <= 0)
+        {
+            printf("Distance (km) cannot be zero or negative: ");
+            continue;
+        }
 
+        is_valid = 1;
+    }
+
+    is_valid = 0;
     printf("Enter time (min sec): ");
-    fgets(buff, n, stdin);
-    sscanf(buff, "%d %d", &minutes, &seconds);
+    while (!is_valid)
+    {
+        fgets(buff, n, stdin);
+
+        if (sscanf(buff, "%d %d", &minutes, &seconds) != 2)
+        {
+            printf("Minutes and seconds must be integers (min sec): ");
+            continue;
+        }
+        else if (minutes < 0 || seconds < 0)
+        {
+            printf("Minutes and seconds cannot be negative: ");
+            continue;
+        }
+        else if (minutes == 0 && seconds == 0)
+        {
+            printf("Time cannot be zero: ");
+            continue;
+        }
+
+        is_valid = 1;
+    }
     
     int total_seconds = 60*minutes + seconds;
     double hours = (double) total_seconds / 3600;
