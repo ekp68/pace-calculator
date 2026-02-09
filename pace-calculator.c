@@ -22,13 +22,13 @@ int main()
     double meters = 1000*kilometers;
     double miles = kilometers / 1.609344;
 
-    int time_km = total_seconds / kilometers;
-    int minute_km = time_km / 60;
-    int second_km = time_km % 60;
+    double time_km = total_seconds / kilometers;
+    int minute_km = (int) (time_km / 60);
+    int second_km = (int) time_km % 60;
 
-    int time_mi = total_seconds / miles;
-    int minute_mi = time_mi / 60;
-    int second_mi = time_mi % 60;
+    double time_mi = total_seconds / miles;
+    int minute_mi = (int) (time_mi / 60);
+    int second_mi = (int) time_mi % 60;
 
     double speed_kph = kilometers / hours;
     double speed_mps = meters / total_seconds;
