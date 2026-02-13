@@ -1,57 +1,19 @@
 #include <stdio.h>
 
+#define BUFF_SIZE 100
+char buff[BUFF_SIZE];
+
+void get_distance(double *kilometers);
+void get_time(int *minutes, int *seconds);
+
 int main()
 {
-    char buff[100];
-    int n = 100;
-
     double kilometers;
     int minutes;
     int seconds;
-    
-    int is_valid = 0;
-    printf("Enter distance (km): ");
-    while (!is_valid)
-    {
-        fgets(buff, n, stdin);
-        if (sscanf(buff, "%lf", &kilometers) != 1)
-        {
-            printf("Distance (km) needs to be a number: ");
-            continue;
-        }
-        else if (kilometers <= 0)
-        {
-            printf("Distance (km) cannot be zero or negative: ");
-            continue;
-        }
 
-        is_valid = 1;
-    }
-
-    is_valid = 0;
-    printf("Enter time (min sec): ");
-    while (!is_valid)
-    {
-        fgets(buff, n, stdin);
-
-        if (sscanf(buff, "%d %d", &minutes, &seconds) != 2)
-        {
-            printf("Minutes and seconds must be integers (min sec): ");
-            continue;
-        }
-        else if (minutes < 0 || seconds < 0)
-        {
-            printf("Minutes and seconds cannot be negative: ");
-            continue;
-        }
-        else if (minutes == 0 && seconds == 0)
-        {
-            printf("Time cannot be zero: ");
-            continue;
-        }
-
-        is_valid = 1;
-    }
+    get_distance(&kilometers);
+    get_time(&minutes, &seconds);
     
     int total_seconds = 60*minutes + seconds;
     double hours = (double) total_seconds / 3600;
@@ -77,4 +39,55 @@ int main()
     printf("speed: %.1lf m/s\n", speed_mps);
 
     return 0;
+}
+
+void get_distance(double *kilometers)
+{
+    int is_valid = 0;
+    
+    printf("Enter distance (km): ");
+    while (!is_valid)
+    {
+        fgets(buff, BUFF_SIZE, stdin);
+        if (sscanf(buff, "%lf", kilometers) != 1)
+        {
+            printf("Distance (km) needs to be a number: ");
+            continue;
+        }
+        else if (*kilometers <= 0)
+        {
+            printf("Distance (km) cannot be zero or negative: ");
+            continue;
+        }
+
+        is_valid = 1;
+    }
+}
+
+void get_time(int *minutes, int *seconds)
+{
+    int is_valid = 0;
+    printf("Enter time (min sec): ");
+    while (!is_valid)
+    {
+        fgets(buff, BUFF_SIZE, stdin);
+
+        if (sscanf(buff, "%d %d", minutes, seconds) != 2)
+        {
+            printf("Minutes and seconds must be integers (min sec): ");
+            continue;
+        }
+        else if (*minutes < 0 || *seconds < 0)
+        {
+            printf("Minutes and seconds cannot be negative: ");
+            continue;
+        }
+        else if (*minutes == 0 && *seconds == 0)
+        {
+            printf("Time cannot be zero: ");
+            continue;
+        }
+
+        is_valid = 1;
+    }
 }
